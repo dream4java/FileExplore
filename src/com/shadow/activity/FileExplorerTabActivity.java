@@ -1,22 +1,6 @@
-/*
- * Copyright (c) 2010-2011, The MiCode Open Source Community (www.micode.net)
- *
- * This file is part of FileExplorer.
- *
- * FileExplorer is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * FileExplorer is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with SwiFTP.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ *  main Activity
  */
-
 package com.shadow.activity;
 
 import java.util.ArrayList;
@@ -38,7 +22,8 @@ import android.view.ActionMode;
 
 import com.shadow.util.Util;
 
-public class FileExplorerTabActivity extends Activity {
+public class FileExplorerTabActivity extends Activity 
+{
     private static final String INSTANCESTATE_TAB = "tab";
     private static final int DEFAULT_OFFSCREEN_PAGES = 2;
     ViewPager mViewPager;
@@ -46,7 +31,8 @@ public class FileExplorerTabActivity extends Activity {
     ActionMode mActionMode;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_pager);
@@ -69,7 +55,8 @@ public class FileExplorerTabActivity extends Activity {
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause() 
+    {
         super.onPause();
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
@@ -77,7 +64,8 @@ public class FileExplorerTabActivity extends Activity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig) 
+    {
         if (getActionBar().getSelectedNavigationIndex() == Util.CATEGORY_TAB_INDEX) {
             FileCategoryActivity categoryFragement =(FileCategoryActivity) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
             if (categoryFragement.isHomePage()) {
@@ -89,14 +77,16 @@ public class FileExplorerTabActivity extends Activity {
         super.onConfigurationChanged(newConfig);
     }
 
-    public void reInstantiateCategoryTab() {
+    public void reInstantiateCategoryTab()
+    {
         mTabsAdapter.destroyItem(mViewPager, Util.CATEGORY_TAB_INDEX,
                 mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX));
         mTabsAdapter.instantiateItem(mViewPager, Util.CATEGORY_TAB_INDEX);
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         IBackPressedListener backPressedListener = (IBackPressedListener) mTabsAdapter
                 .getItem(mViewPager.getCurrentItem());
         if (!backPressedListener.onBack()) {
@@ -104,7 +94,8 @@ public class FileExplorerTabActivity extends Activity {
         }
     }
 
-    public interface IBackPressedListener {
+    public interface IBackPressedListener 
+    {
         /**
          * 处理back事件。
          * @return True: 表示已经处理; False: 没有处理，让基类处理。
@@ -112,11 +103,13 @@ public class FileExplorerTabActivity extends Activity {
         boolean onBack();
     }
 
-    public void setActionMode(ActionMode actionMode) {
+    public void setActionMode(ActionMode actionMode) 
+    {
         mActionMode = actionMode;
     }
 
-    public ActionMode getActionMode() {
+    public ActionMode getActionMode() 
+    {
         return mActionMode;
     }
 
@@ -136,7 +129,8 @@ public class FileExplorerTabActivity extends Activity {
      * tab changes.
      */
     public static class TabsAdapter extends FragmentPagerAdapter
-            implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
+            implements ActionBar.TabListener, ViewPager.OnPageChangeListener
+            {
         private final Context mContext;
         private final ActionBar mActionBar;
         private final ViewPager mViewPager;
@@ -172,12 +166,14 @@ public class FileExplorerTabActivity extends Activity {
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return mTabs.size();
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(int position) 
+        {
             TabInfo info = mTabs.get(position);
             if (info.fragment == null) {
                 info.fragment = Fragment.instantiate(mContext, info.clss.getName(), info.args);
@@ -186,27 +182,32 @@ public class FileExplorerTabActivity extends Activity {
         }
 
         @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+        {
         }
 
         @Override
-        public void onPageSelected(int position) {
+        public void onPageSelected(int position) 
+        {
             mActionBar.setSelectedNavigationItem(position);
         }
 
         @Override
-        public void onPageScrollStateChanged(int state) {
+        public void onPageScrollStateChanged(int state)
+        {
         }
 
         @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        public void onTabSelected(Tab tab, FragmentTransaction ft) 
+        {
             Object tag = tab.getTag();
             for (int i=0; i<mTabs.size(); i++) {
                 if (mTabs.get(i) == tag) {
                     mViewPager.setCurrentItem(i);
                 }
             }
-            if(!tab.getText().equals(mContext.getString(R.string.tab_sd))) {
+            if(!tab.getText().equals(mContext.getString(R.string.tab_sd)))
+            {
                 ActionMode actionMode = ((FileExplorerTabActivity) mContext).getActionMode();
                 if (actionMode != null) {
                     actionMode.finish();
@@ -215,11 +216,13 @@ public class FileExplorerTabActivity extends Activity {
         }
 
         @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) 
+        {
         }
 
         @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        public void onTabReselected(Tab tab, FragmentTransaction ft)
+        {
         }
     }
 }
