@@ -46,7 +46,8 @@ import com.shadow.util.Util;
 import com.shadow.util.Util.SDCardInfo;
 
 public class FileCategoryActivity extends Fragment implements IFileInteractionListener,
-        FavoriteDatabaseListener, IBackPressedListener {
+        FavoriteDatabaseListener, IBackPressedListener
+        {
 
     public static final String EXT_FILETER_KEY = "ext_filter";
 
@@ -98,7 +99,8 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
+    {
         mActivity = getActivity();
         mFileViewActivity = (FileViewActivity) ((FileExplorerTabActivity) mActivity)
                 .getFragment(Util.SDCARD_TAB_INDEX);

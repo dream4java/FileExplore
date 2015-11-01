@@ -1,7 +1,4 @@
-/**
- *  main Activity
- *  2015-11-1
- */
+
 package com.shadow.activity;
 
 import java.util.ArrayList;
@@ -22,79 +19,58 @@ import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
 
 import com.shadow.util.Util;
-
+/**
+ * Main activity
+ * @author dream4java
+ * 2015-11-01
+ */
 public class FileExplorerTabActivity extends Activity 
 {
-    private static final String INSTANCESTATE_TAB = "tab";
-    private static final int DEFAULT_OFFSCREEN_PAGES = 2;
-    ViewPager mViewPager;
-    TabsAdapter mTabsAdapter;
-    ActionMode mActionMode;
+    private static final String INSTANCESTATE_TAB 		= "tab";
+    private static final int DEFAULT_OFFSCREEN_PAGES 	= 2;
+    ViewPager mViewPager								= null;
+    TabsAdapter mTabsAdapter							= null;
+    ActionMode mActionMode								= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.fragment_pager);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setOffscreenPageLimit(DEFAULT_OFFSCREEN_PAGES);
+        initView();
+    }
 
-        final ActionBar bar = getActionBar();
-        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_HOME);
-
-        mTabsAdapter = new TabsAdapter(this, mViewPager);
+    /**
+     * 
+     * @return
+     */
+    private void initView()
+    {
+    	mViewPager 			= (ViewPager) findViewById(R.id.pager);
+    	mTabsAdapter		= new TabsAdapter(this, mViewPager);
+        ActionBar bar		= getActionBar();
+       
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_category),
                 FileCategoryActivity.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_sd),
                 FileViewActivity.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_remote),
                 ServerControlActivity.class, null);
+        
+        mViewPager.setOffscreenPageLimit(DEFAULT_OFFSCREEN_PAGES);
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_HOME);
         bar.setSelectedNavigationItem(PreferenceManager.getDefaultSharedPreferences(this)
                 .getInt(INSTANCESTATE_TAB, Util.CATEGORY_TAB_INDEX));
     }
-
-    @Override
-    protected void onPause() 
-    {
-        super.onPause();
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
-        editor.commit();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) 
-    {
-        if (getActionBar().getSelectedNavigationIndex() == Util.CATEGORY_TAB_INDEX) {
-            FileCategoryActivity categoryFragement =(FileCategoryActivity) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
-            if (categoryFragement.isHomePage()) {
-                reInstantiateCategoryTab();
-            } else {
-                categoryFragement.setConfigurationChanged(true);
-            }
-        }
-        super.onConfigurationChanged(newConfig);
-    }
-
+    
     public void reInstantiateCategoryTab()
     {
         mTabsAdapter.destroyItem(mViewPager, Util.CATEGORY_TAB_INDEX,
                 mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX));
         mTabsAdapter.instantiateItem(mViewPager, Util.CATEGORY_TAB_INDEX);
     }
-
-    @Override
-    public void onBackPressed()
-    {
-        IBackPressedListener backPressedListener = (IBackPressedListener) mTabsAdapter
-                .getItem(mViewPager.getCurrentItem());
-        if (!backPressedListener.onBack()) {
-            super.onBackPressed();
-        }
-    }
-
+    
     public interface IBackPressedListener 
     {
         /**
@@ -117,17 +93,48 @@ public class FileExplorerTabActivity extends Activity
     public Fragment getFragment(int tabIndex) {
         return mTabsAdapter.getItem(tabIndex);
     }
+    
+    @Override
+    protected void onPause() 
+    {
+        super.onPause();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putInt(INSTANCESTATE_TAB, getActionBar().getSelectedNavigationIndex());
+        editor.commit();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) 
+    {
+        if (getActionBar().getSelectedNavigationIndex() == Util.CATEGORY_TAB_INDEX)
+        {
+            FileCategoryActivity categoryFragement = (FileCategoryActivity) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
+            if (categoryFragement.isHomePage()) 
+            {
+                reInstantiateCategoryTab();
+            } 
+            else
+            {
+                categoryFragement.setConfigurationChanged(true);
+            }
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        IBackPressedListener backPressedListener = (IBackPressedListener) mTabsAdapter
+                .getItem(mViewPager.getCurrentItem());
+        if (!backPressedListener.onBack()) {
+            super.onBackPressed();
+        }
+    }
 
     /**
-     * This is a helper class that implements the management of tabs and all
-     * details of connecting a ViewPager with associated TabHost.  It relies on a
-     * trick.  Normally a tab host has a simple API for supplying a View or
-     * Intent that each tab will show.  This is not sufficient for switching
-     * between pages.  So instead we make the content part of the tab host
-     * 0dp high (it is not shown) and the TabsAdapter supplies its own dummy
-     * view to show as the tab content.  It listens to changes in tabs, and takes
-     * care of switch to the correct paged in the ViewPager whenever the selected
-     * tab changes.
+     *  tab adapter
+     * @author dream4java
+     *
      */
     public static class TabsAdapter extends FragmentPagerAdapter
             implements ActionBar.TabListener, ViewPager.OnPageChangeListener
@@ -148,7 +155,8 @@ public class FileExplorerTabActivity extends Activity
             }
         }
 
-        public TabsAdapter(Activity activity, ViewPager pager) {
+        public TabsAdapter(Activity activity, ViewPager pager) 
+        {
             super(activity.getFragmentManager());
             mContext = activity;
             mActionBar = activity.getActionBar();
@@ -157,7 +165,8 @@ public class FileExplorerTabActivity extends Activity
             mViewPager.setOnPageChangeListener(this);
         }
 
-        public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
+        public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args)
+        {
             TabInfo info = new TabInfo(clss, args);
             tab.setTag(info);
             tab.setTabListener(this);
@@ -176,7 +185,8 @@ public class FileExplorerTabActivity extends Activity
         public Fragment getItem(int position) 
         {
             TabInfo info = mTabs.get(position);
-            if (info.fragment == null) {
+            if (info.fragment == null) 
+            {
                 info.fragment = Fragment.instantiate(mContext, info.clss.getName(), info.args);
             }
             return info.fragment;
@@ -202,15 +212,19 @@ public class FileExplorerTabActivity extends Activity
         public void onTabSelected(Tab tab, FragmentTransaction ft) 
         {
             Object tag = tab.getTag();
-            for (int i=0; i<mTabs.size(); i++) {
-                if (mTabs.get(i) == tag) {
+            for (int i=0; i<mTabs.size(); i++) 
+            {
+                if (mTabs.get(i) == tag) 
+                {
                     mViewPager.setCurrentItem(i);
+                    break;
                 }
             }
             if(!tab.getText().equals(mContext.getString(R.string.tab_sd)))
             {
                 ActionMode actionMode = ((FileExplorerTabActivity) mContext).getActionMode();
-                if (actionMode != null) {
+                if (actionMode != null)
+                {
                     actionMode.finish();
                 }
             }
