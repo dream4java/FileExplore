@@ -28,8 +28,8 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.shadow.data.FileInfo;
-import com.shadow.data.Settings;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.Settings;
 import com.shadow.util.Util;
 
 public class FileOperationHelper {

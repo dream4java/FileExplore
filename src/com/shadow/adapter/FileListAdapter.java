@@ -31,9 +31,9 @@ import net.micode.fileexplorer.R;
 import net.micode.fileexplorer.R.id;
 import net.micode.fileexplorer.R.layout;
 
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.FileListItem;
 import com.shadow.dal.FileViewInteractionHub;
-import com.shadow.data.FileInfo;
-import com.shadow.data.FileListItem;
 import com.shadow.help.FileIconHelper;
 
 public class FileListAdapter extends ArrayAdapter<FileInfo> {

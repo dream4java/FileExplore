@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import net.micode.fileexplorer.R;
 import net.micode.fileexplorer.R.string;
 
-import com.shadow.data.FileInfo;
+import com.shadow.bean.FileInfo;
 
 import android.app.AlertDialog;
 import android.content.Context;

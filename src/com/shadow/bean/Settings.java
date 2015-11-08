@@ -17,30 +17,29 @@
  * along with SwiFTP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.shadow.data;
+package com.shadow.bean;
 
-public class FileInfo {
+public class Settings {
+    // whether show system and cache images, default not
+    private boolean mShowDotAndHiddenFiles;
+    private static Settings mInstance;
 
-    public String fileName;
+    private Settings() {
 
-    public String filePath;
+    }
 
-    public long fileSize;
+    public static Settings instance() {
+        if(mInstance == null) {
+            mInstance = new Settings();
+        }
+        return mInstance;
+    }
 
-    public boolean IsDir;
+    public boolean getShowDotAndHiddenFiles() {
+        return mShowDotAndHiddenFiles;
+    }
 
-    public int Count;
-
-    public long ModifiedDate;
-
-    public boolean Selected;
-
-    public boolean canRead;
-
-    public boolean canWrite;
-
-    public boolean isHidden;
-
-    public long dbId; // id in the database, if is from database
-
+    public void setShowDotAndHiddenFiles(boolean s) {
+        mShowDotAndHiddenFiles = s;
+    }
 }

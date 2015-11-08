@@ -27,7 +27,7 @@ import net.micode.fileexplorer.R.id;
 import net.micode.fileexplorer.R.layout;
 import net.micode.fileexplorer.R.string;
 
-import com.shadow.data.FileInfo;
+import com.shadow.bean.FileInfo;
 import com.shadow.help.FileIconHelper;
 import com.shadow.util.Util;
 

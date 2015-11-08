@@ -49,10 +49,10 @@ import net.micode.fileexplorer.R;
 import net.micode.fileexplorer.R.string;
 
 import com.shadow.activity.FileViewActivity;
+import com.shadow.bean.FavoriteItem;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.Settings;
 import com.shadow.config.GlobalConsts;
-import com.shadow.data.FavoriteItem;
-import com.shadow.data.FileInfo;
-import com.shadow.data.Settings;
 
 public class Util {
     private static String ANDROID_SECURE = "/mnt/sdcard/.android_secure";

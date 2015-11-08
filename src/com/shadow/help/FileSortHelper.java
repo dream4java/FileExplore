@@ -22,7 +22,7 @@ package com.shadow.help;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import com.shadow.data.FileInfo;
+import com.shadow.bean.FileInfo;
 import com.shadow.util.Util;
 
 public class FileSortHelper {

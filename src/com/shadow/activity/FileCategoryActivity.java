@@ -29,11 +29,11 @@ import android.widget.TextView;
 
 import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
 import com.shadow.adapter.FileListCursorAdapter;
+import com.shadow.bean.FileInfo;
 import com.shadow.config.GlobalConsts;
 import com.shadow.dal.FavoriteList;
 import com.shadow.dal.FileViewInteractionHub;
 import com.shadow.dal.FileViewInteractionHub.Mode;
-import com.shadow.data.FileInfo;
 import com.shadow.help.FileCategoryHelper;
 import com.shadow.help.FavoriteDatabaseHelper.FavoriteDatabaseListener;
 import com.shadow.help.FileCategoryHelper.CategoryInfo;

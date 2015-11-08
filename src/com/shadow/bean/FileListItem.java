@@ -17,7 +17,7 @@
  * along with SwiFTP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.shadow.data;
+package com.shadow.bean;
 
 import com.shadow.activity.FileExplorerTabActivity;
 import com.shadow.activity.FileViewActivity;

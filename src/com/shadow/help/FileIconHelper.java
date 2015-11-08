@@ -28,7 +28,7 @@ import android.widget.ImageView;
 
 import java.util.HashMap;
 
-import com.shadow.data.FileInfo;
+import com.shadow.bean.FileInfo;
 import com.shadow.help.FileCategoryHelper.FileCategory;
 import com.shadow.tool.FileIconLoader;
 import com.shadow.tool.FileIconLoader.IconLoadFinishListener;

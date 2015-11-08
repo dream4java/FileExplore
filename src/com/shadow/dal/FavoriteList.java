@@ -27,7 +27,7 @@ import net.micode.fileexplorer.R.string;
 import com.shadow.activity.FileExplorerTabActivity;
 import com.shadow.activity.FileViewActivity;
 import com.shadow.adapter.FavoriteListAdapter;
-import com.shadow.data.FavoriteItem;
+import com.shadow.bean.FavoriteItem;
 import com.shadow.help.FavoriteDatabaseHelper;
 import com.shadow.help.FileIconHelper;
 import com.shadow.help.FavoriteDatabaseHelper.FavoriteDatabaseListener;

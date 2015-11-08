@@ -27,11 +27,11 @@ import android.widget.ListView;
 
 import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
 import com.shadow.adapter.FileListAdapter;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.Settings;
 import com.shadow.config.GlobalConsts;
 import com.shadow.dal.FileViewInteractionHub;
 import com.shadow.dal.FileViewInteractionHub.Mode;
-import com.shadow.data.FileInfo;
-import com.shadow.data.Settings;
 import com.shadow.help.FileCategoryHelper;
 import com.shadow.help.FileIconHelper;
 import com.shadow.help.FileSortHelper;

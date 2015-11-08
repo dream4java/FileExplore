@@ -25,7 +25,7 @@ import android.view.View;
 
 import java.util.Collection;
 
-import com.shadow.data.FileInfo;
+import com.shadow.bean.FileInfo;
 import com.shadow.help.FileIconHelper;
 import com.shadow.help.FileSortHelper;
 
