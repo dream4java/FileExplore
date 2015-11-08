@@ -20,7 +20,8 @@
 package com.shadow.bean;
 
 
-public class FavoriteItem {
+public class FavoriteItem 
+{
     // id in the database
     public long id;
 
@@ -31,12 +32,14 @@ public class FavoriteItem {
 
     public FileInfo fileInfo;
 
-    public FavoriteItem(String t, String l) {
+    public FavoriteItem(String t, String l) 
+    {
         title = t;
         location = l;
     }
 
-    public FavoriteItem(long i, String t, String l) {
+    public FavoriteItem(long i, String t, String l)
+    {
         id = i;
         title = t;
         location = l;
