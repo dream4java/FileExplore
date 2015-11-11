@@ -32,7 +32,8 @@ import com.shadow.bean.FileInfo;
 import com.shadow.bean.Settings;
 import com.shadow.util.Util;
 
-public class FileOperationHelper {
+public class FileOperationHelper
+{
     private static final String LOG_TAG = "FileOperation";
 
     private ArrayList<FileInfo> mCurFileNameList = new ArrayList<FileInfo>();
@@ -43,21 +44,25 @@ public class FileOperationHelper {
 
     private FilenameFilter mFilter;
 
-    public interface IOperationProgressListener {
+    public interface IOperationProgressListener
+    {
         void onFinish();
 
         void onFileChanged(String path);
     }
 
-    public FileOperationHelper(IOperationProgressListener l) {
+    public FileOperationHelper(IOperationProgressListener l)
+    {
         mOperationListener = l;
     }
 
-    public void setFilenameFilter(FilenameFilter f) {
+    public void setFilenameFilter(FilenameFilter f)
+    {
         mFilter = f;
     }
 
-    public boolean CreateFolder(String path, String name) {
+    public boolean CreateFolder(String path, String name)
+    {
         Log.v(LOG_TAG, "CreateFolder >>> " + path + "," + name);
 
         File f = new File(Util.makePath(path, name));
@@ -67,7 +72,8 @@ public class FileOperationHelper {
         return f.mkdir();
     }
 
-    public void Copy(ArrayList<FileInfo> files) {
+    public void Copy(ArrayList<FileInfo> files)
+    {
         copyFileList(files);
     }
 
@@ -79,7 +85,8 @@ public class FileOperationHelper {
         asnycExecute(new Runnable() {
             @Override
             public void run() {
-                for (FileInfo f : mCurFileNameList) {
+                for (FileInfo f : mCurFileNameList)
+                {
                     CopyFile(f, _path);
                 }
 
@@ -94,11 +101,13 @@ public class FileOperationHelper {
         return true;
     }
 
-    public boolean canPaste() {
+    public boolean canPaste() 
+    {
         return mCurFileNameList.size() != 0;
     }
 
-    public void StartMove(ArrayList<FileInfo> files) {
+    public void StartMove(ArrayList<FileInfo> files) 
+    {
         if (mMoving)
             return;
 
@@ -106,12 +115,15 @@ public class FileOperationHelper {
         copyFileList(files);
     }
 
-    public boolean isMoveState() {
+    public boolean isMoveState()
+    {
         return mMoving;
     }
 
-    public boolean canMove(String path) {
-        for (FileInfo f : mCurFileNameList) {
+    public boolean canMove(String path)
+    {
+        for (FileInfo f : mCurFileNameList)
+        {
             if (!f.IsDir)
                 continue;
 
@@ -122,13 +134,16 @@ public class FileOperationHelper {
         return true;
     }
 
-    public void clear() {
-        synchronized(mCurFileNameList) {
+    public void clear()
+    {
+        synchronized(mCurFileNameList)
+        {
             mCurFileNameList.clear();
         }
     }
 
-    public boolean EndMove(String path) {
+    public boolean EndMove(String path)
+    {
         if (!mMoving)
             return false;
         mMoving = false;
@@ -137,10 +152,12 @@ public class FileOperationHelper {
             return false;
 
         final String _path = path;
-        asnycExecute(new Runnable() {
+        asnycExecute(new Runnable()
+        {
             @Override
             public void run() {
-                    for (FileInfo f : mCurFileNameList) {
+                    for (FileInfo f : mCurFileNameList)
+                    {
                         MoveFile(f, _path);
                     }
 
@@ -155,19 +172,24 @@ public class FileOperationHelper {
         return true;
     }
 
-    public ArrayList<FileInfo> getFileList() {
+    public ArrayList<FileInfo> getFileList()
+    {
         return mCurFileNameList;
     }
 
-    private void asnycExecute(Runnable r) {
+    private void asnycExecute(Runnable r)
+    {
         final Runnable _r = r;
         new AsyncTask() {
             @Override
-            protected Object doInBackground(Object... params) {
-                synchronized(mCurFileNameList) {
+            protected Object doInBackground(Object... params)
+            {
+                synchronized(mCurFileNameList)
+                {
                     _r.run();
                 }
-                if (mOperationListener != null) {
+                if (mOperationListener != null)
+                {
                     mOperationListener.onFinish();
                 }
 
@@ -176,9 +198,11 @@ public class FileOperationHelper {
         }.execute();
     }
 
-    public boolean isFileSelected(String path) {
+    public boolean isFileSelected(String path)
+    {
         synchronized(mCurFileNameList) {
-            for (FileInfo f : mCurFileNameList) {
+            for (FileInfo f : mCurFileNameList)
+            {
                 if (f.filePath.equalsIgnoreCase(path))
                     return true;
             }
@@ -186,7 +210,8 @@ public class FileOperationHelper {
         return false;
     }
 
-    public boolean Rename(FileInfo f, String newName) {
+    public boolean Rename(FileInfo f, String newName) 
+    {
         if (f == null || newName == null) {
             Log.e(LOG_TAG, "Rename: null parameter");
             return false;

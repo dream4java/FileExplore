@@ -20,13 +20,9 @@
 package com.shadow.ui;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.drawable;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.layout;
-import net.micode.fileexplorer.R.string;
-
+import com.shadow.R;
 import com.shadow.bean.FileInfo;
 import com.shadow.help.FileIconHelper;
 import com.shadow.util.Util;
@@ -41,21 +37,28 @@ import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
-public class InformationDialog extends AlertDialog {
+public class InformationDialog extends AlertDialog
+{
     protected static final int ID_USER = 100;
     private FileInfo mFileInfo;
     private FileIconHelper mFileIconHelper;
     private Context mContext;
     private View mView;
+    private AsyncTask task 			= null;
+    private GetSizeHandler mHandler = null;
 
-    public InformationDialog(Context context, FileInfo f, FileIconHelper iconHelper) {
+    public InformationDialog(Context context, FileInfo f, FileIconHelper iconHelper)
+    {
         super(context);
-        mFileInfo = f;
+        mFileInfo 		= f;
         mFileIconHelper = iconHelper;
-        mContext = context;
+        mContext 		= context;
+        mHandler		= new GetSizeHandler(this);
+        
     }
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         mView = getLayoutInflater().inflate(R.layout.information_dialog, null);
 
         if (mFileInfo.IsDir) {
@@ -85,27 +88,43 @@ public class InformationDialog extends AlertDialog {
         super.onCreate(savedInstanceState);
     }
 
-    private Handler mHandler = new Handler() {
-
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
+     static class GetSizeHandler extends Handler
+    {
+    	WeakReference<InformationDialog> mDialog;
+    	
+    	public GetSizeHandler(InformationDialog dialog)
+    	{
+    		mDialog = new WeakReference<InformationDialog>(dialog);
+    	}
+        public void handleMessage(Message msg)
+        {
+            switch (msg.what)
+            {
                 case ID_USER:
+                {
+                	InformationDialog dialogContext = mDialog.get();
+                	if (dialogContext == null) return;
                     Bundle data = msg.getData();
                     long size = data.getLong("SIZE");
-                    ((TextView) mView.findViewById(R.id.information_size)).setText(formatFileSizeString(size));
+                    ((TextView) dialogContext.mView.findViewById(R.id.information_size)).setText(dialogContext.formatFileSizeString(size));
+                }
+                	break;
             }
         };
-    };
-
-    private AsyncTask task;
+    }
 
     @SuppressWarnings("unchecked")
-    private void asyncGetSize() {
-        task = new AsyncTask() {
+    
+    private void asyncGetSize()
+    {
+        
+    	task = new AsyncTask()
+        {
             private long size;
 
             @Override
-            protected Object doInBackground(Object... params) {
+            protected Object doInBackground(Object... params) 
+            {
                 String path = (String) params[0];
                 size = 0;
                 getSize(path);
@@ -137,7 +156,8 @@ public class InformationDialog extends AlertDialog {
         }.execute(mFileInfo.filePath);
     }
 
-    private void onSize(final long size) {
+    private void onSize(final long size)
+    {
         Message msg = new Message();
         msg.what = ID_USER;
         Bundle bd = new Bundle();
@@ -146,7 +166,8 @@ public class InformationDialog extends AlertDialog {
         mHandler.sendMessage(msg); // 向Handler发送消息,更新UI
     }
 
-    private String formatFileSizeString(long size) {
+    private String formatFileSizeString(long size)
+    {
         String ret = "";
         if (size >= 1024) {
             ret = Util.convertStorage(size);

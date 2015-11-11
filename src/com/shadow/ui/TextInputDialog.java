@@ -19,9 +19,8 @@
 
 package com.shadow.ui;
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.layout;
+import com.shadow.R;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -74,6 +73,7 @@ public class TextInputDialog extends AlertDialog {
                             mInputText = mFolderName.getText().toString();
                             if (mListener.onFinish(mInputText)) {
                                 dismiss();
+                               
                             }
                         }
                     }

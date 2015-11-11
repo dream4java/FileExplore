@@ -23,7 +23,13 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import net.micode.fileexplorer.R;
+import com.shadow.R;
+import com.shadow.config.MediaFile;
+import com.shadow.config.MediaFile.MediaFileType;
+import com.shadow.help.FileSortHelper.SortMethod;
+import com.shadow.util.Util;
+import com.shadow.util.filter.FilenameExtFilter;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -33,12 +39,6 @@ import android.provider.MediaStore.Files.FileColumns;
 import android.provider.MediaStore.Images;
 import android.provider.MediaStore.Video;
 import android.util.Log;
-
-import com.shadow.config.MediaFile;
-import com.shadow.config.MediaFile.MediaFileType;
-import com.shadow.help.FileSortHelper.SortMethod;
-import com.shadow.util.Util;
-import com.shadow.util.filter.FilenameExtFilter;
 
 public class FileCategoryHelper {
     public static final int COLUMN_ID = 0;

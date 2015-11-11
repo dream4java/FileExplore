@@ -1,6 +1,20 @@
 
 package com.shadow.dal;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import com.shadow.R;
+import com.shadow.activity.FileExplorerTabActivity;
+import com.shadow.adapter.FavoriteListAdapter;
+import com.shadow.bean.FavoriteItem;
+import com.shadow.fragment.FileViewFragment;
+import com.shadow.help.FavoriteDatabaseHelper;
+import com.shadow.help.FavoriteDatabaseHelper.FavoriteDatabaseListener;
+import com.shadow.help.FileIconHelper;
+import com.shadow.util.IntentBuilder;
+import com.shadow.util.Util;
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,23 +30,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.io.File;
-import java.util.ArrayList;
-
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.layout;
-import net.micode.fileexplorer.R.string;
-
-import com.shadow.activity.FileExplorerTabActivity;
-import com.shadow.activity.FileViewActivity;
-import com.shadow.adapter.FavoriteListAdapter;
-import com.shadow.bean.FavoriteItem;
-import com.shadow.help.FavoriteDatabaseHelper;
-import com.shadow.help.FileIconHelper;
-import com.shadow.help.FavoriteDatabaseHelper.FavoriteDatabaseListener;
-import com.shadow.util.IntentBuilder;
-import com.shadow.util.Util;
 
 public class FavoriteList implements FavoriteDatabaseListener {
     private static final String LOG_TAG = "FavoriteList";
@@ -134,7 +131,7 @@ public class FavoriteList implements FavoriteDatabaseListener {
 
         if (favorite.fileInfo.IsDir) {
             FileExplorerTabActivity activity = (FileExplorerTabActivity) mContext;
-            ((FileViewActivity) activity.getFragment(Util.SDCARD_TAB_INDEX))
+            ((FileViewFragment) activity.getFragment(Util.SDCARD_TAB_INDEX))
                     .setPath(favorite.location);
             activity.getActionBar().setSelectedNavigationItem(Util.SDCARD_TAB_INDEX);
         } else {

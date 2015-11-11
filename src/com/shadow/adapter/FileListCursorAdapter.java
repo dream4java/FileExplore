@@ -19,20 +19,10 @@
 
 package com.shadow.adapter;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CursorAdapter;
-
 import java.util.Collection;
 import java.util.HashMap;
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.layout;
-
+import com.shadow.R;
 import com.shadow.bean.FileInfo;
 import com.shadow.bean.FileListItem;
 import com.shadow.dal.FileViewInteractionHub;
@@ -40,7 +30,15 @@ import com.shadow.help.FileCategoryHelper;
 import com.shadow.help.FileIconHelper;
 import com.shadow.util.Util;
 
-public class FileListCursorAdapter extends CursorAdapter {
+import android.content.Context;
+import android.database.Cursor;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CursorAdapter;
+
+public class FileListCursorAdapter extends CursorAdapter
+{
 
     private final LayoutInflater mFactory;
 
@@ -53,7 +51,8 @@ public class FileListCursorAdapter extends CursorAdapter {
     private Context mContext;
 
     public FileListCursorAdapter(Context context, Cursor cursor,
-            FileViewInteractionHub f, FileIconHelper fileIcon) {
+            FileViewInteractionHub f, FileIconHelper fileIcon)
+    {
         super(context, cursor, false /* auto-requery */);
         mFactory = LayoutInflater.from(context);
         mFileViewInteractionHub = f;
@@ -77,6 +76,7 @@ public class FileListCursorAdapter extends CursorAdapter {
                 mFileViewInteractionHub);
         view.findViewById(R.id.category_file_checkbox_area).setOnClickListener(
                 new FileListItem.FileItemOnClickListener(mContext, mFileViewInteractionHub));
+        
     }
 
     @Override

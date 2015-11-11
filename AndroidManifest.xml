@@ -19,11 +19,12 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.micode.fileexplorer"
+    package="com.shadow"
     android:versionCode="1"
     android:versionName="0.1" >
 
-    <uses-sdk android:minSdkVersion="14" />
+    <uses-sdk android:minSdkVersion="14" 
+        android:targetSdkVersion="14"/>
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -33,6 +34,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:allowBackup="false"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light"
@@ -67,7 +69,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".net.micode.fileexplorer.SearchActivity" >
+        <activity android:name="com.shadow.activity.SearchActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.SEARCH" />
 
@@ -82,7 +84,7 @@
         <activity
             android:label="@string/menu_setting"
             android:launchMode="singleTop"
-            android:name="FileExplorerPreferenceActivity"
+            android:name="com.shadow.activity.FileExplorerPreferenceActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
 

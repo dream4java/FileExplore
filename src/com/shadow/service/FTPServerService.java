@@ -27,6 +27,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.swiftp.Defaults;
+import org.swiftp.Globals;
+import org.swiftp.MyLog;
+import org.swiftp.ProxyConnector;
+import org.swiftp.SessionThread;
+import org.swiftp.TcpListener;
+import org.swiftp.UiUpdater;
+import org.swiftp.Util;
+
+import com.shadow.R;
+import com.shadow.activity.FileExplorerTabActivity;
+import com.shadow.config.GlobalConsts;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -42,22 +55,6 @@ import android.net.wifi.WifiManager.WifiLock;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
-
-import org.swiftp.Defaults;
-import org.swiftp.Globals;
-import org.swiftp.MyLog;
-import org.swiftp.ProxyConnector;
-import org.swiftp.SessionThread;
-import org.swiftp.TcpListener;
-import org.swiftp.UiUpdater;
-import org.swiftp.Util;
-
-import com.shadow.activity.FileExplorerTabActivity;
-import com.shadow.config.GlobalConsts;
-
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.drawable;
-import net.micode.fileexplorer.R.string;
 
 public class FTPServerService extends Service implements Runnable {
     protected static Thread serverThread = null;

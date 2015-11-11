@@ -19,22 +19,19 @@
 
 package com.shadow.adapter;
 
+import java.util.List;
+
+import com.shadow.R;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.FileListItem;
+import com.shadow.dal.FileViewInteractionHub;
+import com.shadow.help.FileIconHelper;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
-import java.util.List;
-
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.layout;
-
-import com.shadow.bean.FileInfo;
-import com.shadow.bean.FileListItem;
-import com.shadow.dal.FileViewInteractionHub;
-import com.shadow.help.FileIconHelper;
 
 public class FileListAdapter extends ArrayAdapter<FileInfo> {
     private LayoutInflater mInflater;

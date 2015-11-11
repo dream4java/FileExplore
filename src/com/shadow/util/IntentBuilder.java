@@ -22,9 +22,7 @@ package com.shadow.util;
 import java.io.File;
 import java.util.ArrayList;
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.string;
-
+import com.shadow.R;
 import com.shadow.bean.FileInfo;
 
 import android.app.AlertDialog;

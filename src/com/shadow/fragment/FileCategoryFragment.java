@@ -1,5 +1,5 @@
 
-package com.shadow.activity;
+package com.shadow.fragment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,7 +7,26 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.micode.fileexplorer.R;
+import com.shadow.R;
+import com.shadow.activity.FileExplorerTabActivity;
+import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
+import com.shadow.adapter.FileListCursorAdapter;
+import com.shadow.bean.FileInfo;
+import com.shadow.config.GlobalConsts;
+import com.shadow.dal.FavoriteList;
+import com.shadow.dal.FileViewInteractionHub;
+import com.shadow.dal.FileViewInteractionHub.Mode;
+import com.shadow.help.FavoriteDatabaseHelper.FavoriteDatabaseListener;
+import com.shadow.help.FileCategoryHelper;
+import com.shadow.help.FileCategoryHelper.CategoryInfo;
+import com.shadow.help.FileCategoryHelper.FileCategory;
+import com.shadow.help.FileIconHelper;
+import com.shadow.help.FileSortHelper;
+import com.shadow.idal.IFileInteractionListener;
+import com.shadow.ui.CategoryBar;
+import com.shadow.util.Util;
+import com.shadow.util.Util.SDCardInfo;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -27,25 +46,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
-import com.shadow.adapter.FileListCursorAdapter;
-import com.shadow.bean.FileInfo;
-import com.shadow.config.GlobalConsts;
-import com.shadow.dal.FavoriteList;
-import com.shadow.dal.FileViewInteractionHub;
-import com.shadow.dal.FileViewInteractionHub.Mode;
-import com.shadow.help.FileCategoryHelper;
-import com.shadow.help.FavoriteDatabaseHelper.FavoriteDatabaseListener;
-import com.shadow.help.FileCategoryHelper.CategoryInfo;
-import com.shadow.help.FileCategoryHelper.FileCategory;
-import com.shadow.help.FileIconHelper;
-import com.shadow.help.FileSortHelper;
-import com.shadow.idal.IFileInteractionListener;
-import com.shadow.ui.CategoryBar;
-import com.shadow.util.Util;
-import com.shadow.util.Util.SDCardInfo;
-
-public class FileCategoryActivity extends Fragment implements IFileInteractionListener,
+public class FileCategoryFragment extends Fragment implements IFileInteractionListener,
         FavoriteDatabaseListener, IBackPressedListener
         {
 
@@ -79,11 +80,12 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
 
     private View mRootView;
 
-    private FileViewActivity mFileViewActivity;
+    private FileViewFragment mFileViewActivity;
 
     private boolean mConfigurationChanged = false;
 
-    public void setConfigurationChanged(boolean changed) {
+    public void setConfigurationChanged(boolean changed)
+    {
         mConfigurationChanged = changed;
     }
 
@@ -101,41 +103,53 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
     {
-        mActivity = getActivity();
-        mFileViewActivity = (FileViewActivity) ((FileExplorerTabActivity) mActivity)
+        mActivity 				= getActivity();
+        mFileViewActivity 		= (FileViewFragment) ((FileExplorerTabActivity) mActivity)
                 .getFragment(Util.SDCARD_TAB_INDEX);
-        mRootView = inflater.inflate(R.layout.file_explorer_category, container, false);
-        curViewPage = ViewPage.Invalid;
-        mFileViewInteractionHub = new FileViewInteractionHub(this);
-        mFileViewInteractionHub.setMode(Mode.View);
-        mFileViewInteractionHub.setRootPath("/");
-        mFileIconHelper = new FileIconHelper(mActivity);
-        mFavoriteList = new FavoriteList(mActivity, (ListView) mRootView.findViewById(R.id.favorite_list), this, mFileIconHelper);
-        mFavoriteList.initList();
-        mAdapter = new FileListCursorAdapter(mActivity, null, mFileViewInteractionHub, mFileIconHelper);
-
-        ListView fileListView = (ListView) mRootView.findViewById(R.id.file_path_list);
-        fileListView.setAdapter(mAdapter);
-
-        setupClick();
-        setupCategoryInfo();
-        updateUI();
-        registerScannerReceiver();
-
+        mRootView 				= inflater.inflate(R.layout.file_explorer_category, container, false);
+      
         return mRootView;
     }
+@Override
+public void onViewCreated(View view, Bundle savedInstanceState) 
+{
+	super.onViewCreated(view, savedInstanceState);
+	  curViewPage 			= ViewPage.Invalid;
+      mFileViewInteractionHub = new FileViewInteractionHub(this);
+      mFileViewInteractionHub.setMode(Mode.View);
+      mFileViewInteractionHub.setRootPath("/");
+      mFileIconHelper 		= new FileIconHelper(mActivity);
+      mFavoriteList 		= new FavoriteList(mActivity, (ListView) mRootView.findViewById(R.id.favorite_list), this, mFileIconHelper);
+      mFavoriteList.initList();
+      mAdapter 				= new FileListCursorAdapter(mActivity, null, mFileViewInteractionHub, mFileIconHelper);
 
-    private void registerScannerReceiver() {
+      ListView fileListView = (ListView) mRootView.findViewById(R.id.file_path_list);
+      fileListView.setAdapter(mAdapter);
+
+      setupClick();
+      setupCategoryInfo();
+      updateUI();
+      registerScannerReceiver();
+	
+}
+    
+    private void registerScannerReceiver()
+    {
         mScannerReceiver = new ScannerReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_MEDIA_SCANNER_FINISHED);
         intentFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
         intentFilter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-        intentFilter.addDataScheme("file");
+        intentFilter.addDataScheme("fi 00"
+        		+ ""
+        		+ ""
+        		+ ""
+        		+ "le");
         mActivity.registerReceiver(mScannerReceiver, intentFilter);
     }
 
-    private void setupCategoryInfo() {
+    private void setupCategoryInfo()
+    {
         mFileCagetoryHelper = new FileCategoryHelper(mActivity);
 
         mCategoryBar = (CategoryBar) mRootView.findViewById(R.id.category_bar);
@@ -146,7 +160,8 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
                 R.drawable.category_bar_apk, R.drawable.category_bar_other
         };
 
-        for (int i = 0; i < imgs.length; i++) {
+        for (int i = 0; i < imgs.length; i++)
+        {
             mCategoryBar.addCategory(imgs[i]);
         }
 
@@ -155,7 +170,8 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
         }
     }
 
-    public void refreshCategoryInfo() {
+    public void refreshCategoryInfo()
+    {
         SDCardInfo sdCardInfo = Util.getSDCardInfo();
         if (sdCardInfo != null) {
             mCategoryBar.setFullValue(sdCardInfo.total);
@@ -289,12 +305,14 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
         }
     }
 
-    private void setupClick(int id) {
+    private void setupClick(int id) 
+    {
         View button = mRootView.findViewById(id);
         button.setOnClickListener(onClickListener);
     }
 
-    private void setupClick() {
+    private void setupClick() 
+    {
         setupClick(R.id.category_music);
         setupClick(R.id.category_video);
         setupClick(R.id.category_picture);
@@ -356,7 +374,8 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
     }
 
     @Override
-    public void onDataChanged() {
+    public void onDataChanged()
+    {
         runOnUiThread(new Runnable() {
 
             @Override
@@ -375,7 +394,8 @@ public class FileCategoryActivity extends Fragment implements IFileInteractionLi
     }
 
     @Override
-    public boolean shouldShowOperationPane() {
+    public boolean shouldShowOperationPane()
+    {
         return true;
     }
 

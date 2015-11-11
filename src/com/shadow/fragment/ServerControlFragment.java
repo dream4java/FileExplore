@@ -17,18 +17,20 @@
  * along with SwiFTP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.shadow.activity;
+package com.shadow.fragment;
 
 
 import java.io.File;
 import java.net.InetAddress;
 
-import net.micode.fileexplorer.R;
-
 import org.swiftp.Defaults;
 import org.swiftp.Globals;
 import org.swiftp.MyLog;
 import org.swiftp.UiUpdater;
+
+import com.shadow.R;
+import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
+import com.shadow.service.FTPServerService;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -55,10 +57,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
-import com.shadow.service.FTPServerService;
-
-public class ServerControlActivity extends Fragment implements IBackPressedListener {
+public class ServerControlFragment extends Fragment implements IBackPressedListener {
 
     private TextView ipText;
 
@@ -89,7 +88,7 @@ public class ServerControlActivity extends Fragment implements IBackPressedListe
 
     private View mRootView;
 
-    public ServerControlActivity() {
+    public ServerControlFragment() {
     }
 
     @Override

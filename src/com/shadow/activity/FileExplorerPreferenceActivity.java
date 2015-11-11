@@ -21,7 +21,10 @@ package com.shadow.activity;
 
 import java.io.File;
 
-import net.micode.fileexplorer.R;
+import com.shadow.R;
+import com.shadow.config.GlobalConsts;
+import com.shadow.util.Util;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -30,9 +33,6 @@ import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-
-import com.shadow.config.GlobalConsts;
-import com.shadow.util.Util;
 
 /**
  *

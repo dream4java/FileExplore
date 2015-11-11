@@ -19,6 +19,24 @@
 
 package com.shadow.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+
+import com.shadow.R;
+import com.shadow.bean.FavoriteItem;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.Settings;
+import com.shadow.config.GlobalConsts;
+import com.shadow.fragment.FileViewFragment;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,26 +51,6 @@ import android.util.Log;
 import android.view.ActionMode;
 import android.view.View;
 import android.widget.TextView;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.string;
-
-import com.shadow.activity.FileViewActivity;
-import com.shadow.bean.FavoriteItem;
-import com.shadow.bean.FileInfo;
-import com.shadow.bean.Settings;
-import com.shadow.config.GlobalConsts;
 
 public class Util {
     private static String ANDROID_SECURE = "/mnt/sdcard/.android_secure";
@@ -390,7 +388,7 @@ public class Util {
         notification.defaults = Notification.DEFAULT_SOUND;
         if (intent == null) {
             // FIXEME: category tab is disabled
-            intent = new Intent(context, FileViewActivity.class);
+            intent = new Intent(context, FileViewFragment.class);
         }
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         notification.setLatestEventInfo(context, title, body, contentIntent);

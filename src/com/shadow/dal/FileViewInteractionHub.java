@@ -22,10 +22,26 @@ package com.shadow.dal;
 import java.io.File;
 import java.util.ArrayList;
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.layout;
-import net.micode.fileexplorer.R.string;
+import com.shadow.R;
+import com.shadow.activity.FileExplorerPreferenceActivity;
+import com.shadow.activity.FileExplorerTabActivity;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.FileListItem.ModeCallback;
+import com.shadow.bean.Settings;
+import com.shadow.config.GlobalConsts;
+import com.shadow.fragment.FileViewFragment.SelectFilesCallback;
+import com.shadow.help.FavoriteDatabaseHelper;
+import com.shadow.help.FileOperationHelper;
+import com.shadow.help.FileOperationHelper.IOperationProgressListener;
+import com.shadow.help.FileSortHelper;
+import com.shadow.help.FileSortHelper.SortMethod;
+import com.shadow.idal.IFileInteractionListener;
+import com.shadow.ui.InformationDialog;
+import com.shadow.ui.TextInputDialog;
+import com.shadow.ui.TextInputDialog.OnFinishListener;
+import com.shadow.util.IntentBuilder;
+import com.shadow.util.Util;
+
 import android.R.drawable;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -59,25 +75,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.shadow.activity.FileExplorerPreferenceActivity;
-import com.shadow.activity.FileExplorerTabActivity;
-import com.shadow.activity.FileViewActivity.SelectFilesCallback;
-import com.shadow.bean.FileInfo;
-import com.shadow.bean.Settings;
-import com.shadow.bean.FileListItem.ModeCallback;
-import com.shadow.config.GlobalConsts;
-import com.shadow.help.FavoriteDatabaseHelper;
-import com.shadow.help.FileOperationHelper;
-import com.shadow.help.FileOperationHelper.IOperationProgressListener;
-import com.shadow.help.FileSortHelper;
-import com.shadow.help.FileSortHelper.SortMethod;
-import com.shadow.idal.IFileInteractionListener;
-import com.shadow.ui.InformationDialog;
-import com.shadow.ui.TextInputDialog;
-import com.shadow.ui.TextInputDialog.OnFinishListener;
-import com.shadow.util.IntentBuilder;
-import com.shadow.util.Util;
 
 public class FileViewInteractionHub implements IOperationProgressListener {
     private static final String LOG_TAG = "FileViewInteractionHub";
@@ -313,7 +310,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         }
     }
 
-    public void onOperationSelectAll() {
+    public void onOperationSelectAll()
+    {
         mCheckedFileNameList.clear();
         for (FileInfo f : mFileViewListener.getAllFiles()) {
             f.Selected = true;
@@ -329,7 +327,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         mFileViewListener.onDataChanged();
     }
 
-    private OnClickListener navigationClick = new OnClickListener() {
+    private OnClickListener navigationClick = new OnClickListener()
+    {
 
         @Override
         public void onClick(View v) {
@@ -349,8 +348,10 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     };
 
-    protected void onNavigationBarClick() {
-        if (mDropdownNavigation.getVisibility() == View.VISIBLE) {
+    protected void onNavigationBarClick()
+    {
+        if (mDropdownNavigation.getVisibility() == View.VISIBLE)
+        {
             showDropdownNavigation(false);
         } else {
             LinearLayout list = (LinearLayout) mDropdownNavigation.findViewById(R.id.dropdown_navigation_list);
@@ -407,10 +408,12 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         return false;
     }
 
-    public void onOperationCreateFolder() {
+    public void onOperationCreateFolder()
+    {
         TextInputDialog dialog = new TextInputDialog(mContext, mContext.getString(
                 R.string.operation_create_folder), mContext.getString(R.string.operation_create_folder_message),
-                mContext.getString(R.string.new_folder_name), new OnFinishListener() {
+                mContext.getString(R.string.new_folder_name), new OnFinishListener() 
+        {
                     @Override
                     public boolean onFinish(String text) {
                         return doCreateFolder(text);
@@ -420,7 +423,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         dialog.show();
     }
 
-    private boolean doCreateFolder(String text) {
+    private boolean doCreateFolder(String text)
+    {
         if (TextUtils.isEmpty(text))
             return false;
 
@@ -436,22 +440,26 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         return true;
     }
 
-    public void onOperationSearch() {
+    public void onOperationSearch() 
+    {
 
     }
 
-    public void onSortChanged(SortMethod s) {
+    public void onSortChanged(SortMethod s)
+    {
         if (mFileSortHelper.getSortMethod() != s) {
             mFileSortHelper.setSortMethog(s);
             sortCurrentList();
         }
     }
 
-    public void onOperationCopy() {
+    public void onOperationCopy()
+    {
         onOperationCopy(getSelectedFileList());
     }
 
-    public void onOperationCopy(ArrayList<FileInfo> files) {
+    public void onOperationCopy(ArrayList<FileInfo> files)
+    {
         mFileOperationHelper.Copy(files);
         clearSelection();
 
@@ -642,7 +650,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
         dialog.show();
     }
 
-    public void onOperationInfo() {
+    public void onOperationInfo() 
+    {
         if (getSelectedFileList().size() == 0)
             return;
 
@@ -869,7 +878,8 @@ public class FileViewInteractionHub implements IOperationProgressListener {
 
     private SelectFilesCallback mSelectFilesCallback;
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) 
+    {
         clearSelection();
         showDropdownNavigation(false);
 

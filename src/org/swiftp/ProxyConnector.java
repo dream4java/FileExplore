@@ -31,14 +31,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import net.micode.fileexplorer.R;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.shadow.service.FTPServerService;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 

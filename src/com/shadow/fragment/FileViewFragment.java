@@ -1,11 +1,26 @@
-package com.shadow.activity;
+package com.shadow.fragment;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import net.micode.fileexplorer.R;
+import com.shadow.R;
+import com.shadow.activity.FileExplorerPreferenceActivity;
+import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
+import com.shadow.adapter.FileListAdapter;
+import com.shadow.bean.FileInfo;
+import com.shadow.bean.Settings;
+import com.shadow.config.GlobalConsts;
+import com.shadow.dal.FileViewInteractionHub;
+import com.shadow.dal.FileViewInteractionHub.Mode;
+import com.shadow.help.FileCategoryHelper;
+import com.shadow.help.FileIconHelper;
+import com.shadow.help.FileSortHelper;
+import com.shadow.idal.IFileInteractionListener;
+import com.shadow.tool.ActivitiesManager;
+import com.shadow.util.Util;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -24,26 +39,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.shadow.activity.FileExplorerTabActivity.IBackPressedListener;
-import com.shadow.adapter.FileListAdapter;
-import com.shadow.bean.FileInfo;
-import com.shadow.bean.Settings;
-import com.shadow.config.GlobalConsts;
-import com.shadow.dal.FileViewInteractionHub;
-import com.shadow.dal.FileViewInteractionHub.Mode;
-import com.shadow.help.FileCategoryHelper;
-import com.shadow.help.FileIconHelper;
-import com.shadow.help.FileSortHelper;
-import com.shadow.idal.IFileInteractionListener;
-import com.shadow.tool.ActivitiesManager;
-import com.shadow.util.Util;
 /**
  *  file manager
  * @author dream4java
  *
  */
-public class FileViewActivity extends Fragment implements
+public class FileViewFragment extends Fragment implements
         IFileInteractionListener, IBackPressedListener
         {
     public static final String EXT_FILTER_KEY 		= "ext_filter";

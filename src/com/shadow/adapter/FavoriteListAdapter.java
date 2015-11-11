@@ -21,11 +21,7 @@ package com.shadow.adapter;
 
 import java.util.List;
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.drawable;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.layout;
-
+import com.shadow.R;
 import com.shadow.bean.FavoriteItem;
 import com.shadow.bean.FileInfo;
 import com.shadow.help.FileIconHelper;

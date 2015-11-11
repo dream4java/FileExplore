@@ -3,7 +3,12 @@ package com.shadow.activity;
 
 import java.util.ArrayList;
 
-import net.micode.fileexplorer.R;
+import com.shadow.R;
+import com.shadow.fragment.FileCategoryFragment;
+import com.shadow.fragment.FileViewFragment;
+import com.shadow.fragment.ServerControlFragment;
+import com.shadow.util.Util;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
@@ -17,8 +22,6 @@ import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
-
-import com.shadow.util.Util;
 /**
  * Main activity
  * @author dream4java
@@ -26,7 +29,7 @@ import com.shadow.util.Util;
  */
 public class FileExplorerTabActivity extends Activity 
 {
-    private static final String INSTANCESTATE_TAB 		= "tab";
+    private static final String INSTANCESTATE_TAB 		= "MainActivity";
     private static final int DEFAULT_OFFSCREEN_PAGES 	= 2;
     ViewPager mViewPager								= null;
     TabsAdapter mTabsAdapter							= null;
@@ -41,7 +44,7 @@ public class FileExplorerTabActivity extends Activity
     }
 
     /**
-     * 
+     * initView
      * @return
      */
     private void initView()
@@ -51,11 +54,11 @@ public class FileExplorerTabActivity extends Activity
         ActionBar bar		= getActionBar();
        
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_category),
-                FileCategoryActivity.class, null);
+                FileCategoryFragment.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_sd),
-                FileViewActivity.class, null);
+                FileViewFragment.class, null);
         mTabsAdapter.addTab(bar.newTab().setText(R.string.tab_remote),
-                ServerControlActivity.class, null);
+                ServerControlFragment.class, null);
         
         mViewPager.setOffscreenPageLimit(DEFAULT_OFFSCREEN_PAGES);
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -108,7 +111,7 @@ public class FileExplorerTabActivity extends Activity
     {
         if (getActionBar().getSelectedNavigationIndex() == Util.CATEGORY_TAB_INDEX)
         {
-            FileCategoryActivity categoryFragement = (FileCategoryActivity) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
+            FileCategoryFragment categoryFragement = (FileCategoryFragment) mTabsAdapter.getItem(Util.CATEGORY_TAB_INDEX);
             if (categoryFragement.isHomePage()) 
             {
                 reInstantiateCategoryTab();
@@ -144,12 +147,14 @@ public class FileExplorerTabActivity extends Activity
         private final ViewPager mViewPager;
         private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-        static final class TabInfo {
+        static final class TabInfo
+        {
             private final Class<?> clss;
             private final Bundle args;
             private Fragment fragment;
 
-            TabInfo(Class<?> _class, Bundle _args) {
+            TabInfo(Class<?> _class, Bundle _args)
+            {
                 clss = _class;
                 args = _args;
             }

@@ -19,10 +19,11 @@
 
 package com.shadow.bean;
 
+import com.shadow.R;
 import com.shadow.activity.FileExplorerTabActivity;
-import com.shadow.activity.FileViewActivity;
 import com.shadow.dal.FileViewInteractionHub;
 import com.shadow.dal.FileViewInteractionHub.Mode;
+import com.shadow.fragment.FileViewFragment;
 import com.shadow.help.FileIconHelper;
 import com.shadow.util.Util;
 
@@ -36,15 +37,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.drawable;
-import net.micode.fileexplorer.R.id;
-import net.micode.fileexplorer.R.menu;
 
-public class FileListItem {
+public class FileListItem
+{
     public static void setupFileListItemInfo(Context context, View view,
             FileInfo fileInfo, FileIconHelper fileIcon,
-            FileViewInteractionHub fileViewInteractionHub) {
+            FileViewInteractionHub fileViewInteractionHub)
+    {
 
         // if in moving mode, show selected file always
         if (fileViewInteractionHub.isMoveState()) {
@@ -78,18 +77,21 @@ public class FileListItem {
         }
     }
 
-    public static class FileItemOnClickListener implements OnClickListener {
+    public static class FileItemOnClickListener implements OnClickListener
+    {
         private Context mContext;
         private FileViewInteractionHub mFileViewInteractionHub;
 
         public FileItemOnClickListener(Context context,
-                FileViewInteractionHub fileViewInteractionHub) {
+                FileViewInteractionHub fileViewInteractionHub) 
+        {
             mContext = context;
             mFileViewInteractionHub = fileViewInteractionHub;
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             ImageView img = (ImageView) v.findViewById(R.id.file_checkbox);
             assert (img != null && img.getTag() != null);
 
@@ -167,14 +169,14 @@ public class FileListItem {
                     mode.finish();
                     break;
                 case R.id.action_copy:
-                    ((FileViewActivity) ((FileExplorerTabActivity) mContext)
+                    ((FileViewFragment) ((FileExplorerTabActivity) mContext)
                             .getFragment(Util.SDCARD_TAB_INDEX))
                             .copyFile(mFileViewInteractionHub.getSelectedFileList());
                     mode.finish();
                     scrollToSDcardTab();
                     break;
                 case R.id.action_move:
-                    ((FileViewActivity) ((FileExplorerTabActivity) mContext)
+                    ((FileViewFragment) ((FileExplorerTabActivity) mContext)
                             .getFragment(Util.SDCARD_TAB_INDEX))
                             .moveToFile(mFileViewInteractionHub.getSelectedFileList());
                     mode.finish();

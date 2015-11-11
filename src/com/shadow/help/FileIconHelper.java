@@ -20,19 +20,18 @@
 package com.shadow.help;
 
 
-import net.micode.fileexplorer.R;
-import net.micode.fileexplorer.R.drawable;
-import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
-
 import java.util.HashMap;
 
+import com.shadow.R;
 import com.shadow.bean.FileInfo;
 import com.shadow.help.FileCategoryHelper.FileCategory;
 import com.shadow.tool.FileIconLoader;
 import com.shadow.tool.FileIconLoader.IconLoadFinishListener;
 import com.shadow.util.Util;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
 
 public class FileIconHelper implements IconLoadFinishListener {
 
